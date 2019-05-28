@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  master:
+    image: spark-2.4.3:latest
+    command: bin/spark-class org.apache.spark.deploy.master.Master -h host_ip
+    network_mode: host
+
+
+  worker1:
+    image: spark-2.4.3:latest
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://host_ip:7077
+    network_mode: host
+    environment:
+      - SPARK_WORKER_MEMORY=8g
+      - SPARK_WORKER_CORES=3
+
+  worker2:
+    image: spark-2.4.3:latest
+    command: bin/spark-class org.apache.spark.deploy.worker.Worker spark://host_ip:7077
+    network_mode: host
+    environment:
+      - SPARK_WORKER_MEMORY=8g
+      - SPARK_WORKER_CORES=3
+
